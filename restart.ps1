@@ -1,0 +1,10 @@
+# Restart Smoothie Registration Application Script
+Write-Host "Stopping Smoothie Registration application..." -ForegroundColor Yellow
+
+# Fixed: Moved ErrorAction to Get-Process so it doesn't crash when Python is already stopped
+Get-Process python -ErrorAction SilentlyContinue | Stop-Process -Force
+
+Start-Sleep -Seconds 2
+
+Write-Host "Starting Smoothie Registration application..." -ForegroundColor Green
+& ".\.venv\Scripts\python.exe" main.py

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services: 
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: smoothie_postgres
+    environment:
+      POSTGRES_USER: smoothie_user
+      POSTGRES_PASSWORD: smoothie_password
+      POSTGRES_DB: smoothie_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - smoothie_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smoothie_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5    
+volumes:
+ smoothie_postgres_data:      
