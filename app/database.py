@@ -47,7 +47,6 @@ class DatabaseManager:
             with db_manager.transaction() as session:
                 # Perform database operations using the session
         """
-        
         session = self.SessionLocal()
         try:
             yield session
