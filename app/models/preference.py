@@ -1,6 +1,6 @@
 from sqlalchemy import UUID, Boolean, Column, Date, ForeignKey, Integer, String, text
 from sqlalchemy.orm import relationship
-from app.models.customerpreference import Base, relationship
+from app.models.preference import Base, relationship
 
     
 class CustomerPreference(Base):
