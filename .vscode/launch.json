@@ -10,12 +10,12 @@
             "name": "Smoothie Registration Service",
             "type": "debugpy",
             "request": "launch",
-            "program": "${fileWorkspaceFolder}/main.py",
-            "cwd": "${fileWorkspaceFolder}",
-            "python": "${fileWorkspaceFolder}/.venv/Scripts/python.exe",
+            "program": "${fileWorkspaceFolder:smoothie-registration}/main.py",
+            "cwd": "${fileWorkspaceFolder:smoothie-registration}",
+            "python": "${fileWorkspaceFolder:smoothie-registration}/.venv/Scripts/python.exe",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "envFile": "${fileWorkspaceFolder}/.env",
+            "envFile": "${fileWorkspaceFolder:smoothie-registration}/.env",
             "env": {
                 "PYDEVD_DISABLE_FILE_VALIDATION": "1"
             }

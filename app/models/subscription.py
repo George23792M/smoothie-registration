@@ -1,7 +1,7 @@
 from sqlalchemy import UUID, Column, Date, ForeignKey, String, text
 from sqlalchemy.orm import relationship
 
-from app.models import Base
+from app.models.base import Base
 
 
 class Subscription(Base):
@@ -12,6 +12,7 @@ class Subscription(Base):
     plan_name = Column(String(100), nullable=False, default = "Basic - Standard Smoothie Plan")
     status = Column(String(50), nullable=False, default="ACTIVE")
     start_date = Column(Date, server_default=text("CURRENT_DATE"), nullable=False)
+    end_date = Column(Date, nullable=False)
     cre_ts = Column(String, server_default=text("CURRENT_TIMESTAMP"), nullable=False)
     updt_ts = Column(String, server_default=text("CURRENT_TIMESTAMP"), onupdate=text("CURRENT_TIMESTAMP"), nullable=True)
     

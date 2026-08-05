@@ -1,5 +1,6 @@
 from sqlalchemy import UUID, Boolean, Column, String, text
-from app.models import Base, relationship
+from sqlalchemy.orm import relationship
+from app.models.base import Base
     
 
 class Customer(Base):

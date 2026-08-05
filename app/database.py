@@ -9,12 +9,9 @@ load_dotenv()  # Load environment variables from .env file
 
 class DatabaseManager:
     def __init__(self, app=None):
-        self.engine = None
-        self.SessionLocal = None
-        if app:
-            self.init_app(app)
+            self.init_app()
             
-    def init_app(self, app):
+    def init_app(self):
         "Initialize sql engine and session maker with the Flask app context"
         db_user = os.getenv("DB_USER")
         db_password = os.getenv("DB_PASSWORD")
@@ -56,3 +53,5 @@ class DatabaseManager:
             raise e
         finally:
             session.close()
+            
+db = DatabaseManager()  # Create a global instance of DatabaseManager            

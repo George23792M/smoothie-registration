@@ -1,6 +1,6 @@
 
-
-from app.models.customerpreference import Customer, CustomerPreference, CustomerPreference, Subscription
+from loguru import logger
+from app.models import Customer, CustomerPreference, CustomerPreference, Subscription
 
 
 class CustomerRepository:
@@ -37,6 +37,8 @@ class CustomerRepository:
         )
         session.add(preferences)
         session.flush()  # Flush to get the generated preference Id
+        
+        logger.info(f"Customer {customer.id} saved successfully with subscription {subscription.id} and preferences {preferences.id}.")
         
         return{
             "customer_id": str(customer.id),

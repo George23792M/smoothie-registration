@@ -7,4 +7,5 @@ Get-Process python -ErrorAction SilentlyContinue | Stop-Process -Force
 Start-Sleep -Seconds 2
 
 Write-Host "Starting Smoothie Registration application..." -ForegroundColor Green
-& ".\.venv\Scripts\python.exe" main.py
+
+uv run main.py
