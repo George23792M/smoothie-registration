@@ -10,6 +10,5 @@ class ErrorDetail(BaseModel):
     type: str = Field(..., description="Type of the error")
     
 class ErrorResponseSchema(BaseModel):
-    status: str = Field(..., description="HTTP status code of the error response")
     message: str = Field(..., description="General error message")
     errors: List[ErrorDetail] = Field(..., description="List of detailed error information")

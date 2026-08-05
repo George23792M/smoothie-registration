@@ -21,7 +21,6 @@ def register_exception_handlers(app):
         ]
         
         error_response = ErrorResponseSchema(
-            status="400",
             message="Validation failed",
             errors=formatted_errors
         )
