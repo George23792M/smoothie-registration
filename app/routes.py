@@ -9,6 +9,9 @@ api_router = APIRouter()
 # Dependency injection
 customer_service = CustomerService(db_manager=db)    
 
+@api_router.get("/health", status_code=status.HTTP_200_OK)
+def health_check():
+    return {"message": "Hello from smoothie-registration!"}
 
 @api_router.post('/customers/register', status_code=201)
 def register_customer(validated_body: CustomerRegistrationSchema):

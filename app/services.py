@@ -1,8 +1,13 @@
 
+from app.exceptions.db_exceptions import TransientDatabaseException
+from app.exceptions.service_exceptions import ServiceException
 
 from loguru import logger
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
+from tenacity import stop
 from app.database import DatabaseManager
 from app.repositories import CustomerRepository
+from app.config.config import settings
 
 
 class CustomerService:
@@ -16,6 +21,18 @@ class CustomerService:
         self.db_manager = db_manager
         self.repository = repository is not None and repository or CustomerRepository()
         
+     
+    @retry(
+        stop=stop_after_attempt(settings.DB_RETRY_ATTEMPTS),
+        wait=wait_exponential(
+            min=settings.DB_RETRY_MIN_WAIT,
+            max=settings.DB_RETRY_MAX_WAIT,
+            multiplier=settings.DB_RETRY_MULTIPLIER        
+            ),
+        #onLY RETRY ON: 
+        retry=retry_if_exception_type((TransientDatabaseException)),
+        reraise=True
+        )
     def register_customer(self, data: dict) -> dict:
         """
         Registers a new customer along with their subscription and preferences.
@@ -33,5 +50,18 @@ class CustomerService:
                 logger.info(f"Transaction committed successfully for customer ID {result['customer_id']}.")
                 return result
             except Exception as e:
-                session.rollback()  # Rollback the transaction in case of an error
-                raise e
+                session.rollback()
+                
+                #Do not rety business/constraint violoation error
+                if "duplicate key" in str(e).lower() or "integrity error" in str(e).lower():
+                    logger.error("Integrity constraint violation error. Aborting retries")
+                    
+                # Retry only on transient database errors
+                error_name = type(e).__name__.lower()
+                if any(err in error_name for err in ["operational", "interface", "timeout"]):
+                    logger.warning(f"Transient database error detected: {e}. Raising custom retryable error. ")
+                    raise TransientDatabaseException(str(e).lower()) from e
+                
+                #for other type errors. Failed immediately.
+                logger.error(f"Unexpected error occured during registration process: {e}")
+                raise ServiceException()

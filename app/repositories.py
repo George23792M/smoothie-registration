@@ -1,6 +1,6 @@
 
 from loguru import logger
-from app.models import Customer, CustomerPreference, CustomerPreference, Subscription
+from app.models import Customer, CustomerPreference, Subscription, WorkflowRun
 
 
 class CustomerRepository:
@@ -38,7 +38,18 @@ class CustomerRepository:
         session.add(preferences)
         session.flush()  # Flush to get the generated preference Id
         
-        logger.info(f"Customer {customer.id} saved successfully with subscription {subscription.id} and preferences {preferences.id}.")
+        workflow_run = WorkflowRun(
+            customer_id = customer.id,
+            status = "PENDING",
+            attempt_count = 0,
+            validation_errors = None,
+            email_status = "PENDING",
+            workflow_type = "NEW_REGISTRATION"
+        )
+        session.add(workflow_run)
+        session.flush()  # Flush to get the generated workflow run Id
+        
+        logger.info(f"Customer {customer.id} saved successfully with subscription {subscription.id}, preferences {preferences.id}, and workflow run {workflow_run.id}.")
         
         return{
             "customer_id": str(customer.id),

@@ -4,7 +4,7 @@ annotated-doc==0.0.5
     # via
     #   -r requirements.txt
     #   fastapi
-annotated-types==0.8.0
+annotated-types>=0.6.0
     # via
     #   -r requirements.txt
     #   pydantic
@@ -87,3 +87,9 @@ uvicorn==0.52.1
     # via -r requirements.txt
 win32-setctime==1.2.0
     # via loguru
+tenacity>=8.2.0
+    # via -r requirements.txt
+
+pytest-cov>=7.0.0
+pytest-asyncio>=1.4.0
+pytest-mock>=3.14.0

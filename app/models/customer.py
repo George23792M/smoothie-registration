@@ -19,3 +19,4 @@ class Customer(Base):
     #Relationships:(One-To-Many) A customer can have multiple smoothiee subscriptions
     subscriptions = relationship("Subscription", back_populates="customer", cascade="all, delete-orphan")
     preferences = relationship("CustomerPreference", back_populates="customer", cascade="all, delete-orphan")
+    workflow_runs = relationship("WorkflowRun", back_populates="customer", cascade="all, delete-orphan")

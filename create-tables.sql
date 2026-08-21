@@ -97,7 +97,8 @@ CREATE TABLE workflow_runs (
     status VARCHAR(50) NOT NULL DEFAULT 'PENDING',   -- -- PENDING, RUNNING, SUCCESS, FAILED
     attempt_count int DEFAULT 0, -- -- Tracks how many tries have occurred (max 3)            
     validation_errors TEXT, -- -- Captures the terminal exception or reason for failure
-    email_status VARCHAR(50) DEFAULT 'PENDING', -- -- PENDING, SENT, FAILED                 
+    email_status VARCHAR(50) DEFAULT 'PENDING', -- -- PENDING, SENT, FAILED     
+    workflow_type VARCHAR(50) NOT NULL DEFAULT 'NEW_REGISTRATION', -- -- Type of workflow, e.g., 'NEW_REGISTRATION'
     started_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
     completed_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC')
 );
