@@ -2,12 +2,22 @@ from fastapi import Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from app.exceptions.service_exceptions import ServiceException
+from app.exceptions.custom_exceptions import CustomerAlreadyExistsException
 from app.schemas import ErrorDetail, ErrorResponseSchema
 
 def register_exception_handlers(app):
     """
     Registers custom exception handlers for the FastAPI application.
     """
+    @app.exception_handler(CustomerAlreadyExistsException)
+    async def handle_customer_already_exists(request: Request,e: CustomerAlreadyExistsException):
+        return JSONResponse(
+                    status_code=status.HTTP_409_CONFLICT,
+                    content={
+                        "message": e.message
+                    }
+        )
+    
     @app.exception_handler(RequestValidationError)
     async def handle_validation_error(request: Request, e: RequestValidationError):
 

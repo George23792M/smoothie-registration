@@ -91,6 +91,8 @@ CREATE INDEX idx_customer_quote_history ON customer_quote_history(customer_id, q
 -- -----------------------------------------------------
 -- 7. Workflow Runs Table
 -- -----------------------------------------------------
+
+-- Allowed names in workflow_type column - NEW_REGISTRATION, RECIPE_GENERATION
 CREATE TABLE workflow_runs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     customer_id UUID REFERENCES customers(id) ON DELETE CASCADE,
