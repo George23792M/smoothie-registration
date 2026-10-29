@@ -16,7 +16,7 @@ def health_check():
 @api_router.post('/customers/register', status_code=201)
 def register_customer(validated_body: CustomerRegistrationSchema):
     
-    logger.info(f"Received registration request for customer with email: {validated_body.email}")
+    logger.debug(f"Received registration request for customer with email: {validated_body.email}")
     
     response = customer_service.register_customer(validated_body.model_dump())
     logger.info(f"Customer registered successfully with ID: {response['customer_id']}")

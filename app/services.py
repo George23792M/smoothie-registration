@@ -69,6 +69,7 @@ class CustomerService:
             except Exception as e:
                 session.rollback()
                 
+                # Bubbles to exception hander class
                 if isinstance(e, CustomerAlreadyExistsException):
                     raise
                 
